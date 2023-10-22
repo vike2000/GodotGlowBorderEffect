@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GlowBorderEffect"
-run/main_scene="res://addons/glow_border_effect_test/glow_border_effect_demo.tscn"
+run/main_scene="res://addons/glow_border_effect/test/glow_border_effect_demo.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 

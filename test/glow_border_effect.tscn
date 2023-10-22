@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://mjc1ujficlc2" path="res://addons/glow_border_effect/glow_border_effect_renderer.tscn" id="1_t44cp"]
 [ext_resource type="Script" path="res://addons/glow_border_effect/glow_border_effect_object.gd" id="2_llqfq"]
-[ext_resource type="Script" path="res://addons/glow_border_effect_test/glow_border_effect_demo_camera.gd" id="3_4v1nn"]
+[ext_resource type="Script" path="res://addons/glow_border_effect/test/glow_border_effect_demo_camera.gd" id="3_4v1nn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f68tu"]
 sun_angle_max = 79.09
