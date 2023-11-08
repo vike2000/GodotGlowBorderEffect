@@ -3,32 +3,33 @@ using System.Collections.Generic;
 namespace addons.glow_border_effect {
 	interface ICanGlow { // where this: Node
 		[Export]
-		public	Color	GlowColor	{get;set;}
+		public	StandardMaterial3D	GlowMaterial	{get;set;}
 		[Export(PropertyHint.Layers3DRender)]
-		public	uint	GlowLayer	{get;set;}
-		public	bool	UseGlow		{get;set;}
+		public	uint				GlowLayer		{get;set;}
+		public	bool				UseGlow			{get;set;}
 		
-		public bool SetUseGlow(bool value) {
+		// the idea is for a UseGlow setter implementation to use its backing field (not implementable like DIM in this interface) like the following:
+		// public bool UseGlow {get => _useGlow; set => _useGlow = (this as ICanGlow).UpdateGlow(value);}
+		
+		public bool UpdateGlow(bool value) {
 			foreach(var glowObject in GlowInstances)
 				glowObject.Visible = value;
+			
 			return value;
 		}
 		
 		public List<GeometryInstance3D> GlowInstances {get;set;}
 		
 		public void _ReadyToGlow() {
-			var glowMaterial = new StandardMaterial3D();
-			glowMaterial.AlbedoColor = GlowColor;
-			
-			GlowCreateShadowMeshes((this as Node)!, glowMaterial);
+			GlowCreateShadowMeshes((this as Node)!);
 		}
 		// Create shadow meshes for all GeometryInstances
 		// for glow effect rendering.
-		public void GlowCreateShadowMeshes(Node node, Material material) {
+		public void GlowCreateShadowMeshes(Node node) {
 			// Recurse down the structure in case
 			// GeometryInstance3D exists as children
 			foreach(var child in node.GetChildren())
-				GlowCreateShadowMeshes(child, material);
+				GlowCreateShadowMeshes(child);
 			
 			// Create shadow meshes for GeometryInstances
 			if (node is GeometryInstance3D giNode) {
@@ -40,7 +41,7 @@ namespace addons.glow_border_effect {
 					var glowObject = (giNode.Duplicate(0) as GeometryInstance3D)!;
 					glowObject.Name = newName;
 					glowObject.Layers = GlowLayer;
-					glowObject.MaterialOverride = material;
+					glowObject.MaterialOverride = GlowMaterial;
 					
 					// Clean up and remove children
 					foreach (var child in glowObject.GetChildren())
