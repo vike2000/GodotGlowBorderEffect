@@ -32,7 +32,7 @@ namespace addons.glow_border_effect {
 				GlowCreateShadowMeshes(child);
 			
 			// Create shadow meshes for GeometryInstances
-			if (node is GeometryInstance3D giNode) {
+			if (node is not Label3D && node is GeometryInstance3D giNode) {
 				var newName = "Glow" + giNode.Name;
 				var existing = node.GetNodeOrNull(newName);
 				if (existing != null)
