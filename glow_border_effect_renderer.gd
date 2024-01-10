@@ -41,10 +41,13 @@ class_name GlowBorderEffectRenderer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	material = ShaderMaterial.new()
+	if not material:
+		material = ShaderMaterial.new()
 	material.resource_local_to_scene = true
-	material.shader = Shader.new()
-	material.shader.code = "shader_type canvas_item;
+	if not material.shader:
+		material.shader = Shader.new()
+	if not material.shader.code:
+		material.shader.code = "shader_type canvas_item;
 
 uniform sampler2D view_prepass;
 uniform sampler2D view_blure;
